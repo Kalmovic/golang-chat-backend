@@ -12,6 +12,7 @@ type Client struct {
 	ID   string
 	Conn *websocket.Conn
 	Pool *Pool
+	Username string // Add this field to store the user's name
 }
 
 type Body struct {

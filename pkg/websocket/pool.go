@@ -38,10 +38,10 @@ func (pool *Pool) Start() {
             pool.Clients[client] = true
             log.Printf("Size of Connection Pool: %d", len(pool.Clients))
             // Broadcasting a system message that a client has joined
-            // pool.broadcastMessage(
-						// 		nil,
-						// 		Message{User: "System", Body: "Someone has joined the chat"},
-						// )
+            pool.broadcastMessage(
+								nil,
+								Message{User: "System", Body: client.Username + " has joined the chat"},
+						)
 
         case client := <-pool.Unregister:
             if _, exists := pool.Clients[client]; exists {
@@ -50,7 +50,7 @@ func (pool *Pool) Start() {
                 // Broadcasting a system message that a client has left
                 pool.broadcastMessage(
 									nil,
-									Message{User: "System", Body: "Someone has left the chat"},
+									Message{User: "System", Body: client.Username + " has left the chat"},
 							)
             }
 

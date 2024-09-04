@@ -14,11 +14,17 @@ func serveWs(pool *websocket.Pool, w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprintf(w, "%+v\n", err)
 	}
+	username := r.URL.Query().Get("username")
+	fmt.Println("username", username)
+	if username == "" {
+			username = "Anonymous" // Default username if none provided
+	}
 	client := &websocket.Client{
 		// Generate a unique ID for the client
 		ID: uuid.NewString(),
 		Conn: conn,
 		Pool: pool,
+		Username: username,
 	}
 	pool.Register <- client
 	client.Read()
